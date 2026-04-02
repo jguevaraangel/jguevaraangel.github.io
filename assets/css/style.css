@@ -1,61 +1,70 @@
+    @font-face {
+      font-family: 'Departure Mono';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2409-1@1.0/DepartureMono-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }    
+
     :root {
-      /* Dark Theme (Default minimalist style) */
-      --bg: #0a0a0a;          /* Pure dark background */
-      --surface: #111111;     /* Slightly lighter for cards */
-      --border: #27272a;      /* Subtle borders */
-      --accent: #5b8cff;      /* Keeping your original blue accent */
-      --accent2: #ff6b6b;     
-      --text: #a1a1aa;        /* Muted grayish-white for reading */
+      --bg: #000000;
+      --surface: #111111;
+      --border: #27272a;
+      --accent: #e5e5e5;
+      --accent2: #a1a1aa;
+      --text: #a1a1aa;
       --muted: #71717a;
-      --heading: #ffffff;     /* Crisp white headers */
-      --grid-color: rgba(255, 255, 255, 0.04);
+      --heading: #ffffff;
+      
+      /* NEW: Subtle white pattern for dark mode */
+      --pattern-color: rgba(255, 255, 255, 0.1); 
     }
 
-    /* Light Theme Variables */
     [data-theme="light"] {
-      --bg: #ffffff;
-      --surface: #f4f4f5;
-      --border: #e4e4e7;
-      --accent: #3b82f6;      
-      --accent2: #ef4444;     
+      --bg: #f0ece4; /* Or use Alvaro's slightly warm off-white: #f5f5f0 */
+      --surface: #fafafa;
+      --border: #e5e5e5;
+      --accent: #171717;
+      --accent2: #52525b;
       --text: #52525b;
       --muted: #a1a1aa;
-      --heading: #09090b;
-      --grid-color: rgba(0, 0, 0, 0.04);
+      --heading: #000000;
+
+      /* NEW: Subtle black pattern for light mode */
+      --pattern-color: rgba(0, 0, 0, 0.1); 
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif; /* Updated Font */
-      font-weight: 300;
-      line-height: 1.7;
-      min-height: 100vh;
-      overflow-x: hidden;
-      transition: background-color 0.3s ease, color 0.3s ease; /* Smooth fade when switching themes */
-    }
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  
+  /* Alvaro's Exact Dither Pattern */
+  background-image: 
+    radial-gradient(circle, var(--pattern-color) 0.6px, transparent 0.6px),
+    repeating-linear-gradient(45deg, transparent, transparent 3px, var(--pattern-color) 3px, var(--pattern-color) 3.5px),
+    repeating-linear-gradient(-45deg, transparent, transparent 3px, var(--pattern-color) 3px, var(--pattern-color) 3.5px);
+  background-size: 7px 7px, 9px 9px, 9px 9px;
+}
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(var(--grid-color) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-      background-size: 60px 60px;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .container {
-      max-width: 880px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+  
+  /* ADD THESE TWO LINES: */
+  background-color: var(--bg); 
+  box-shadow: 0 0 20px 20px var(--bg); /* Blurs the edges so it fades into the pattern smoothly */
+}
     /* ── HERO ── */
     header {
       padding: 5.5rem 0 3.5rem;
@@ -68,29 +77,27 @@
 
     .hero-text { max-width: 560px; }
 
-    .hero-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 1.1rem;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.1s;
-    }
-
+.hero-label {
+  font-family: 'Departure Mono', monospace; /* Updated to Departure Mono */
+  font-size: 0.8rem; /* Bumped up slightly since pixel fonts run small */
+  letter-spacing: normal; /* Removed the wide tracking so the pixel font renders cleanly */
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards 0.1s;
+}
     h1 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Departure Mono', monospace;
       font-size: clamp(2.6rem, 6vw, 4.2rem);
-      font-weight: 700;
+      font-weight: normal; /* Changed from 700 to normal */
       color: var(--heading);
       line-height: 1.05;
-      letter-spacing: -0.02em;
+      letter-spacing: normal; /* Pixel fonts look better without squished tracking */
       margin-bottom: 1.2rem;
       opacity: 0;
       animation: fadeUp 0.7s ease forwards 0.2s;
     }
-
     .hero-desc {
       font-size: 1rem;
       color: var(--text);
@@ -126,13 +133,16 @@
       background: rgba(91,140,255,0.06);
     }
 
-    .hero-links a.primary {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-    .hero-links a.primary:hover { background: #4070e0; border-color: #4070e0; }
+.hero-links a.primary {
+  background: var(--heading);
+  color: var(--bg);
+  border-color: var(--heading);
+}
 
+.hero-links a.primary:hover { 
+  background: transparent; 
+  color: var(--heading);
+}
     /* ── Photo ── */
     .photo-wrap {
       opacity: 0;
